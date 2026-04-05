@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+            <apiVersion>66.0</apiVersion>
+            <description>Interactive chess-themed dashboard displaying Account records owned by current user with search, filter by Type and Industry, responsive grid layout with alternating light/dark card colors, and navigation to Account detail pages</description>
+            <isExposed>True</isExposed>
+            <masterLabel>Chess Dashboard</masterLabel>
+            <targets>
+                
+                <target>lightning__AppPage</target>
+                
+                <target>lightning__HomePage</target>
+                
+                <target>lightning__Tab</target>
+                
+            </targets>
+        </LightningComponentBundle>

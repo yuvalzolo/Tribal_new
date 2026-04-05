@@ -1,0 +1,212 @@
+/* Chess Dashboard Styles */
+
+.chessboard {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+/* Header Styles */
+.header {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  border-bottom: 4px solid #d4af37;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.title {
+  color: #ffffff;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Filter Card Styles */
+.filterCard {
+  background: #ffffff;
+  border: 2px solid #e9ecef;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.filterCard:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* Empty State */
+.emptyState {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px dashed #dee2e6;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Account Card Base Styles */
+.accountCard {
+  transition: all 0.3s ease;
+  border: 2px solid;
+  position: relative;
+  overflow: hidden;
+}
+
+.accountCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #d4af37 0%, #f4e5b1 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.accountCard:hover::before {
+  opacity: 1;
+}
+
+.accountCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Chess Board Light Square */
+.cardLight {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-color: #e9ecef;
+}
+
+.cardLight:hover {
+  background: linear-gradient(135deg, #ffffff 0%, #f1f3f5 100%);
+  border-color: #d4af37;
+}
+
+/* Chess Board Dark Square */
+.cardDark {
+  background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+  border-color: #495057;
+}
+
+.cardDark:hover {
+  background: linear-gradient(135deg, #343a40 0%, #212529 100%);
+  border-color: #d4af37;
+}
+
+/* Account Name Styles */
+.accountName {
+  color: inherit;
+  transition: color 0.3s ease;
+}
+
+.cardLight .accountName {
+  color: #1a1a1a;
+}
+
+.cardDark .accountName {
+  color: #ffffff;
+}
+
+.accountCard:hover .accountName {
+  color: #d4af37;
+}
+
+/* Account Details Styles */
+.accountDetails {
+  margin-top: 8px;
+}
+
+.cardLight .accountDetails {
+  color: #495057;
+}
+
+.cardDark .accountDetails {
+  color: #e9ecef;
+}
+
+/* Override Mantine Badge colors for dark cards */
+.cardDark [class*='Badge'] {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Override Mantine Text colors for dark cards */
+.cardDark [class*='Text'] {
+  color: #e9ecef;
+}
+
+.cardDark [class*='Text'][data-dimmed] {
+  color: #adb5bd;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .header {
+    padding: 1rem 0;
+  }
+
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .accountCard {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Loading and animation styles */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+/* Gold accent colors */
+.goldAccent {
+  color: #d4af37;
+}
+
+/* Chess-themed decorative elements */
+.accountCard::after {
+  content: '♟';
+  position: absolute;
+  bottom: 8px;
+  right: 12px;
+  font-size: 2rem;
+  opacity: 0.05;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.cardLight::after {
+  color: #1a1a1a;
+}
+
+.cardDark::after {
+  color: #ffffff;
+}
+
+.accountCard:hover::after {
+  opacity: 0.15;
+  transform: scale(1.1);
+}
+
+/* Anchor link styles for dark cards */
+.cardDark a {
+  color: #74c0fc;
+}
+
+.cardDark a:hover {
+  color: #4dabf7;
+}
+
+.cardLight a {
+  color: #1971c2;
+}
+
+.cardLight a:hover {
+  color: #1864ab;
+}

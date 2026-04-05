@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
+            <flexiPageRegions>
+                <itemInstances>
+                    <componentInstance>
+                        <identifier>chessDashboard1</identifier>
+                        <componentName>chessDashboard</componentName>
+                    </componentInstance>
+                </itemInstances>
+                <name>main</name>
+                <type>Region</type>
+            </flexiPageRegions>
+            <masterLabel>Chess Dashboard</masterLabel>
+            <description>Interactive chess-themed dashboard displaying Account records with search, filtering, and responsive grid layout</description>
+            <template>
+                <name>flexipage:defaultAppHomeTemplate</name>
+            </template>
+            <type>AppPage</type>
+        </FlexiPage>
