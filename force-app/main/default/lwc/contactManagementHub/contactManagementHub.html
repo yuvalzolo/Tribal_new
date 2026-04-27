@@ -1,0 +1,258 @@
+<template>
+    <lightning-card title="Contact Management Hub" icon-name="standard:contact">
+        <div slot="actions">
+            <lightning-button-group>
+                <lightning-button
+                    label={viewModeLabel}
+                    icon-name={viewModeIcon}
+                    onclick={handleToggleView}
+                ></lightning-button>
+                <lightning-button
+                    label="Refresh"
+                    icon-name="utility:refresh"
+                    onclick={handleRefresh}
+                ></lightning-button>
+            </lightning-button-group>
+        </div>
+
+        <!-- Filters Section -->
+        <div class="slds-m-around_medium">
+            <div class="slds-grid slds-gutters slds-wrap">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4">
+                    <lightning-combobox
+                        name="contactRole"
+                        label="Contact Role"
+                        value={roleFilter}
+                        options={roleOptions}
+                        onchange={handleRoleChange}
+                        placeholder="All Roles"
+                    ></lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4">
+                    <lightning-combobox
+                        name="engagementLevel"
+                        label="Engagement Level"
+                        value={engagementFilter}
+                        options={engagementOptions}
+                        onchange={handleEngagementChange}
+                        placeholder="All Levels"
+                    ></lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4">
+                    <lightning-combobox
+                        name="account"
+                        label="Account"
+                        value={accountFilter}
+                        options={accountOptions}
+                        onchange={handleAccountChange}
+                        placeholder="All Accounts"
+                    ></lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4">
+                    <lightning-input
+                        type="search"
+                        label="Search Contacts"
+                        value={searchTerm}
+                        onchange={handleSearch}
+                        placeholder="Search by name or email..."
+                    ></lightning-input>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Spinner -->
+        <template if:true={isLoading}>
+            <div class="slds-m-around_medium">
+                <lightning-spinner alternative-text="Loading contacts"></lightning-spinner>
+            </div>
+        </template>
+
+        <!-- List View -->
+        <template if:true={isListView}>
+            <template if:false={isLoading}>
+                <div class="slds-m-around_medium">
+                    <template if:true={hasContacts}>
+                        <div class="slds-grid slds-wrap slds-gutters">
+                            <template for:each={contacts} for:item="contact">
+                                <div key={contact.id} class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3">
+                                    <div class="contact-card" data-id={contact.id} onclick={handleContactClick}>
+                                        <div class="card-header">
+                                            <h3 class="card-title">{contact.name}</h3>
+                                            <template if:true={contact.engagementLevel}>
+                                                <lightning-badge label={contact.engagementLevel} class={contact.engagementBadgeClass}></lightning-badge>
+                                            </template>
+                                        </div>
+                                        <div class="card-body">
+                                            <template if:true={contact.title}>
+                                                <div class="card-row">
+                                                    <span class="field-label">Title:</span>
+                                                    <span class="field-value">{contact.title}</span>
+                                                </div>
+                                            </template>
+                                            <template if:true={contact.accountName}>
+                                                <div class="card-row">
+                                                    <span class="field-label">Account:</span>
+                                                    <span class="field-value">{contact.accountName}</span>
+                                                </div>
+                                            </template>
+                                            <template if:true={contact.contactRole}>
+                                                <div class="card-row">
+                                                    <span class="field-label">Role:</span>
+                                                    <span class="field-value">{contact.contactRole}</span>
+                                                </div>
+                                            </template>
+                                            <template if:true={contact.preferredContactMethod}>
+                                                <div class="card-row">
+                                                    <span class="field-label">Preferred Method:</span>
+                                                    <span class="field-value">{contact.preferredContactMethod}</span>
+                                                </div>
+                                            </template>
+                                            <template if:true={contact.lastContactDate}>
+                                                <div class="card-row">
+                                                    <span class="field-label">Last Contact:</span>
+                                                    <span class="field-value">{contact.formattedLastContactDate}</span>
+                                                </div>
+                                            </template>
+                                        </div>
+                                        <div class="card-actions">
+                                            <lightning-button-group>
+                                                <template if:true={contact.email}>
+                                                    <lightning-button
+                                                        label="Email"
+                                                        icon-name="utility:email"
+                                                        data-id={contact.id}
+                                                        data-email={contact.email}
+                                                        onclick={handleEmailClick}
+                                                    ></lightning-button>
+                                                </template>
+                                                <template if:true={contact.phone}>
+                                                    <lightning-button
+                                                        label="Call"
+                                                        icon-name="utility:call"
+                                                        data-id={contact.id}
+                                                        data-phone={contact.phone}
+                                                        onclick={handleCallClick}
+                                                    ></lightning-button>
+                                                </template>
+                                                <template if:true={contact.linkedInProfile}>
+                                                    <lightning-button
+                                                        label="LinkedIn"
+                                                        icon-name="utility:socialshare"
+                                                        data-url={contact.linkedInProfile}
+                                                        onclick={handleLinkedInClick}
+                                                    ></lightning-button>
+                                                </template>
+                                            </lightning-button-group>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+
+                    <template if:false={hasContacts}>
+                        <div class="slds-text-align_center slds-m-vertical_large">
+                            <p class="slds-text-body_regular">No contacts found matching your filters.</p>
+                        </div>
+                    </template>
+                </div>
+            </template>
+        </template>
+
+        <!-- Grouped View (by Account) -->
+        <template if:true={isGroupedView}>
+            <template if:false={isLoading}>
+                <div class="slds-m-around_medium">
+                    <template if:true={hasAccountGroups}>
+                        <template for:each={accountGroups} for:item="accountGroup">
+                            <div key={accountGroup.accountId} class="account-group">
+                                <div class="account-group-header">
+                                    <h3 class="account-group-title">
+                                        {accountGroup.accountName}
+                                        <lightning-badge label={accountGroup.contactCount}></lightning-badge>
+                                    </h3>
+                                </div>
+                                <div class="slds-grid slds-wrap slds-gutters">
+                                    <template for:each={accountGroup.contacts} for:item="contact">
+                                        <div key={contact.id} class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3">
+                                            <div class="contact-card" data-id={contact.id} onclick={handleContactClick}>
+                                                <div class="card-header">
+                                                    <h3 class="card-title">{contact.name}</h3>
+                                                    <template if:true={contact.engagementLevel}>
+                                                        <lightning-badge label={contact.engagementLevel} class={contact.engagementBadgeClass}></lightning-badge>
+                                                    </template>
+                                                </div>
+                                                <div class="card-body">
+                                                    <template if:true={contact.title}>
+                                                        <div class="card-row">
+                                                            <span class="field-label">Title:</span>
+                                                            <span class="field-value">{contact.title}</span>
+                                                        </div>
+                                                    </template>
+                                                    <template if:true={contact.contactRole}>
+                                                        <div class="card-row">
+                                                            <span class="field-label">Role:</span>
+                                                            <span class="field-value">{contact.contactRole}</span>
+                                                        </div>
+                                                    </template>
+                                                    <template if:true={contact.preferredContactMethod}>
+                                                        <div class="card-row">
+                                                            <span class="field-label">Preferred Method:</span>
+                                                            <span class="field-value">{contact.preferredContactMethod}</span>
+                                                        </div>
+                                                    </template>
+                                                    <template if:true={contact.lastContactDate}>
+                                                        <div class="card-row">
+                                                            <span class="field-label">Last Contact:</span>
+                                                            <span class="field-value">{contact.formattedLastContactDate}</span>
+                                                        </div>
+                                                    </template>
+                                                </div>
+                                                <div class="card-actions">
+                                                    <lightning-button-group>
+                                                        <template if:true={contact.email}>
+                                                            <lightning-button
+                                                                label="Email"
+                                                                icon-name="utility:email"
+                                                                data-id={contact.id}
+                                                                data-email={contact.email}
+                                                                onclick={handleEmailClick}
+                                                            ></lightning-button>
+                                                        </template>
+                                                        <template if:true={contact.phone}>
+                                                            <lightning-button
+                                                                label="Call"
+                                                                icon-name="utility:call"
+                                                                data-id={contact.id}
+                                                                data-phone={contact.phone}
+                                                                onclick={handleCallClick}
+                                                            ></lightning-button>
+                                                        </template>
+                                                        <template if:true={contact.linkedInProfile}>
+                                                            <lightning-button
+                                                                label="LinkedIn"
+                                                                icon-name="utility:socialshare"
+                                                                data-url={contact.linkedInProfile}
+                                                                onclick={handleLinkedInClick}
+                                                            ></lightning-button>
+                                                        </template>
+                                                    </lightning-button-group>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
+                    </template>
+
+                    <template if:false={hasAccountGroups}>
+                        <div class="slds-text-align_center slds-m-vertical_large">
+                            <p class="slds-text-body_regular">No contacts found matching your filters.</p>
+                        </div>
+                    </template>
+                </div>
+            </template>
+        </template>
+    </lightning-card>
+</template>

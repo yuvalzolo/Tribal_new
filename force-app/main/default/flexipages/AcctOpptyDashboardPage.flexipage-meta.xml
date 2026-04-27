@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
+            <flexiPageRegions>
+                <itemInstances>
+                    <componentInstance>
+                        <identifier>accountOpportunityDashboard1</identifier>
+                        <componentName>accountOpportunityDashboard</componentName>
+                    </componentInstance>
+                </itemInstances>
+                <name>main</name>
+                <type>Region</type>
+            </flexiPageRegions>
+            <masterLabel>Account &amp; Opportunity Dashboard</masterLabel>
+            <description>Interactive dashboard displaying accounts with key metrics and opportunities grouped by stage with filtering and search capabilities</description>
+            <template>
+                <name>flexipage:defaultAppHomeTemplate</name>
+            </template>
+            <type>AppPage</type>
+        </FlexiPage>

@@ -1,0 +1,240 @@
+<template>
+    <lightning-card title="Account & Opportunity Dashboard" icon-name="standard:dashboard">
+        <div slot="actions">
+            <lightning-button
+                label="Refresh"
+                icon-name="utility:refresh"
+                onclick={handleRefresh}
+            ></lightning-button>
+        </div>
+
+        <!-- Summary Statistics -->
+        <div class="slds-m-around_medium">
+            <div class="slds-grid slds-gutters slds-wrap">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4">
+                    <div class="summary-card">
+                        <div class="summary-label">Total Accounts</div>
+                        <div class="summary-value">{formattedTotalAccounts}</div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4">
+                    <div class="summary-card">
+                        <div class="summary-label">Total Opportunities</div>
+                        <div class="summary-value">{formattedTotalOpportunities}</div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4">
+                    <div class="summary-card">
+                        <div class="summary-label">Total Pipeline Value</div>
+                        <div class="summary-value">{formattedTotalPipeline}</div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4">
+                    <div class="summary-card">
+                        <div class="summary-label">Average Win Rate</div>
+                        <div class="summary-value">{formattedAverageWinRate}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Navigation -->
+        <lightning-tabset active-tab-value={activeTab} onselect={handleTabChange}>
+
+            <!-- Accounts Tab -->
+            <lightning-tab label="Accounts" value="accounts">
+                <div class="slds-m-around_medium">
+                    <!-- Account Filters -->
+                    <div class="slds-grid slds-gutters slds-wrap slds-m-bottom_medium">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                            <lightning-combobox
+                                name="accountTier"
+                                label="Account Tier"
+                                value={accountTierFilter}
+                                options={accountTierOptions}
+                                onchange={handleAccountTierChange}
+                            ></lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                            <lightning-combobox
+                                name="accountIndustry"
+                                label="Primary Industry"
+                                value={accountIndustryFilter}
+                                options={industryOptions}
+                                onchange={handleAccountIndustryChange}
+                            ></lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                            <lightning-input
+                                type="search"
+                                label="Search Accounts"
+                                value={accountSearchTerm}
+                                onchange={handleAccountSearch}
+                                placeholder="Search by name..."
+                            ></lightning-input>
+                        </div>
+                    </div>
+
+                    <!-- Accounts List -->
+                    <template if:true={isLoading}>
+                        <lightning-spinner alternative-text="Loading"></lightning-spinner>
+                    </template>
+
+                    <template if:true={hasAccounts}>
+                        <div class="slds-grid slds-wrap slds-gutters">
+                            <template for:each={accounts} for:item="account">
+                                <div key={account.id} class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3">
+                                    <div class="account-card" data-id={account.id} onclick={handleAccountClick}>
+                                        <div class="card-header">
+                                            <h3 class="card-title">{account.name}</h3>
+                                            <template if:true={account.accountTier}>
+                                                <lightning-badge label={account.accountTier}></lightning-badge>
+                                            </template>
+                                        </div>
+                                        <div class="card-body">
+                                            <template if:true={account.primaryIndustry}>
+                                                <div class="card-row">
+                                                    <span class="field-label">Industry:</span>
+                                                    <span class="field-value">{account.primaryIndustry}</span>
+                                                </div>
+                                            </template>
+                                            <template if:true={account.annualContractValue}>
+                                                <div class="card-row">
+                                                    <span class="field-label">Contract Value:</span>
+                                                    <span class="field-value">{account.formattedAnnualContractValue}</span>
+                                                </div>
+                                            </template>
+                                            <template if:true={account.accountManagerName}>
+                                                <div class="card-row">
+                                                    <span class="field-label">Account Manager:</span>
+                                                    <span class="field-value">{account.accountManagerName}</span>
+                                                </div>
+                                            </template>
+                                            <template if:true={account.lastEngagementDate}>
+                                                <div class="card-row">
+                                                    <span class="field-label">Last Engagement:</span>
+                                                    <span class="field-value">{account.formattedLastEngagementDate}</span>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+
+                    <template if:false={hasAccounts}>
+                        <div class="slds-text-align_center slds-m-vertical_large">
+                            <p class="slds-text-body_regular">No accounts found matching your filters.</p>
+                        </div>
+                    </template>
+                </div>
+            </lightning-tab>
+
+            <!-- Opportunities Tab -->
+            <lightning-tab label="Opportunities" value="opportunities">
+                <div class="slds-m-around_medium">
+                    <!-- Opportunity Filters -->
+                    <div class="slds-grid slds-gutters slds-wrap slds-m-bottom_medium">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4">
+                            <lightning-combobox
+                                name="opportunityStage"
+                                label="Stage"
+                                value={opportunityStageFilter}
+                                options={stageOptions}
+                                onchange={handleOpportunityStageChange}
+                            ></lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4">
+                            <lightning-combobox
+                                name="opportunityPriority"
+                                label="Priority"
+                                value={opportunityPriorityFilter}
+                                options={dealPriorityOptions}
+                                onchange={handleOpportunityPriorityChange}
+                            ></lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4">
+                            <lightning-combobox
+                                name="opportunityCloseDate"
+                                label="Close Date"
+                                value={opportunityCloseDateFilter}
+                                options={closeDateOptions}
+                                onchange={handleOpportunityCloseDateChange}
+                            ></lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4">
+                            <lightning-input
+                                type="search"
+                                label="Search Opportunities"
+                                value={opportunitySearchTerm}
+                                onchange={handleOpportunitySearch}
+                                placeholder="Search by name..."
+                            ></lightning-input>
+                        </div>
+                    </div>
+
+                    <!-- Opportunities List -->
+                    <template if:true={isLoading}>
+                        <lightning-spinner alternative-text="Loading"></lightning-spinner>
+                    </template>
+
+                    <template if:true={hasOpportunities}>
+                        <div class="slds-grid slds-wrap slds-gutters">
+                            <template for:each={opportunities} for:item="opportunity">
+                                <div key={opportunity.id} class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3">
+                                    <div class="opportunity-card" data-id={opportunity.id} onclick={handleOpportunityClick}>
+                                        <div class="card-header">
+                                            <h3 class="card-title">{opportunity.name}</h3>
+                                            <template if:true={opportunity.dealPriority}>
+                                                <lightning-badge label={opportunity.dealPriority}></lightning-badge>
+                                            </template>
+                                        </div>
+                                        <div class="card-body">
+                                            <template if:true={opportunity.accountName}>
+                                                <div class="card-row">
+                                                    <span class="field-label">Account:</span>
+                                                    <span class="field-value">{opportunity.accountName}</span>
+                                                </div>
+                                            </template>
+                                            <template if:true={opportunity.stageName}>
+                                                <div class="card-row">
+                                                    <span class="field-label">Stage:</span>
+                                                    <span class="field-value">{opportunity.stageName}</span>
+                                                </div>
+                                            </template>
+                                            <template if:true={opportunity.amount}>
+                                                <div class="card-row">
+                                                    <span class="field-label">Amount:</span>
+                                                    <span class="field-value">{opportunity.formattedAmount}</span>
+                                                </div>
+                                            </template>
+                                            <template if:true={opportunity.closeDate}>
+                                                <div class="card-row">
+                                                    <span class="field-label">Close Date:</span>
+                                                    <span class="field-value">{opportunity.formattedCloseDate}</span>
+                                                </div>
+                                            </template>
+                                            <template if:true={opportunity.winProbability}>
+                                                <div class="card-row">
+                                                    <span class="field-label">Win Probability:</span>
+                                                    <span class="field-value">{opportunity.formattedWinProbability}</span>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+
+                    <template if:false={hasOpportunities}>
+                        <div class="slds-text-align_center slds-m-vertical_large">
+                            <p class="slds-text-body_regular">No opportunities found matching your filters.</p>
+                        </div>
+                    </template>
+                </div>
+            </lightning-tab>
+        </lightning-tabset>
+    </lightning-card>
+</template>

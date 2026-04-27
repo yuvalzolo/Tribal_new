@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+            <fullName>ECP_Contact_Role__c</fullName>
+            <label>Contact Role</label>
+            <description>Role of this contact in the buying process and decision-making hierarchy</description>
+            <type>Picklist</type>
+            <required>false</required>
+            <trackHistory>false</trackHistory>
+            
+            <!-- Field Level Security - Visible and Editable for all profiles by default -->
+            <securityClassification>Public</securityClassification>
+            <complianceGroup>None</complianceGroup>
+            
+            <valueSet>
+                <restricted>true</restricted>
+                <valueSetDefinition>
+                    <sorted>false</sorted>
+                    
+                    <value>
+                        <fullName>Decision_Maker</fullName>
+                        <default>false</default>
+                        <label>Decision Maker</label>
+                    </value>
+                    
+                    <value>
+                        <fullName>Influencer</fullName>
+                        <default>false</default>
+                        <label>Influencer</label>
+                    </value>
+                    
+                    <value>
+                        <fullName>End_User</fullName>
+                        <default>false</default>
+                        <label>End User</label>
+                    </value>
+                    
+                    <value>
+                        <fullName>Champion</fullName>
+                        <default>false</default>
+                        <label>Champion</label>
+                    </value>
+                    
+                </valueSetDefinition>
+            </valueSet>
+        </CustomField>

@@ -1,0 +1,198 @@
+/* Summary Cards */
+.summary-card {
+    background: #f3f3f3;
+    border-radius: 4px;
+    padding: 1rem;
+    text-align: center;
+}
+
+.summary-label {
+    font-size: 0.875rem;
+    color: #706e6b;
+    margin-bottom: 0.5rem;
+}
+
+.summary-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #080707;
+}
+
+/* Tab Styling */
+.slds-tabs_default__nav {
+    background: #ffffff;
+}
+
+.slds-tabs_default__link {
+    cursor: pointer;
+}
+
+/* Account Grid */
+.account-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+.account-card {
+    background: #ffffff;
+    border: 1px solid #d8dde6;
+    border-radius: 4px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.account-card:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.account-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.account-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #0070d2;
+    margin: 0;
+    flex: 1;
+}
+
+.account-tier {
+    background: #0070d2;
+    color: #ffffff;
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.account-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* Opportunity Grid */
+.opportunity-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+.opportunity-card {
+    background: #ffffff;
+    border: 1px solid #d8dde6;
+    border-radius: 4px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.opportunity-card:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.opportunity-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.opportunity-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #0070d2;
+    margin: 0;
+    flex: 1;
+}
+
+.opportunity-priority {
+    background: #fe9339;
+    color: #ffffff;
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.opportunity-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* Detail Rows */
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+}
+
+.detail-label {
+    color: #706e6b;
+    font-weight: 500;
+}
+
+.detail-value {
+    color: #080707;
+    font-weight: 400;
+}
+
+.health-score {
+    color: #080707;
+    font-weight: 600;
+}
+
+/* Health Score Colors */
+.health-high {
+    color: #04844b;
+}
+
+.health-medium {
+    color: #fe9339;
+}
+
+.health-low {
+    color: #c23934;
+}
+
+/* Priority Colors */
+.priority-critical {
+    background: #c23934;
+}
+
+.priority-high {
+    background: #fe9339;
+}
+
+.priority-medium {
+    background: #0070d2;
+}
+
+.priority-low {
+    background: #706e6b;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .account-grid,
+    .opportunity-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .summary-card {
+        margin-bottom: 0.5rem;
+    }
+}

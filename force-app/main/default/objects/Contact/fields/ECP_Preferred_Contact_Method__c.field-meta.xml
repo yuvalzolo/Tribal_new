@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+            <fullName>ECP_Preferred_Contact_Method__c</fullName>
+            <label>Preferred Contact Method</label>
+            <description>Preferred method of communication for reaching this contact</description>
+            <type>Picklist</type>
+            <required>false</required>
+            <trackHistory>false</trackHistory>
+            
+            <!-- Field Level Security - Visible and Editable for all profiles by default -->
+            <securityClassification>Public</securityClassification>
+            <complianceGroup>None</complianceGroup>
+            
+            <valueSet>
+                <restricted>true</restricted>
+                <valueSetDefinition>
+                    <sorted>false</sorted>
+                    
+                    <value>
+                        <fullName>Email</fullName>
+                        <default>false</default>
+                        <label>Email</label>
+                    </value>
+                    
+                    <value>
+                        <fullName>Phone</fullName>
+                        <default>false</default>
+                        <label>Phone</label>
+                    </value>
+                    
+                    <value>
+                        <fullName>LinkedIn</fullName>
+                        <default>false</default>
+                        <label>LinkedIn</label>
+                    </value>
+                    
+                    <value>
+                        <fullName>In_Person</fullName>
+                        <default>false</default>
+                        <label>In-Person</label>
+                    </value>
+                    
+                </valueSetDefinition>
+            </valueSet>
+        </CustomField>

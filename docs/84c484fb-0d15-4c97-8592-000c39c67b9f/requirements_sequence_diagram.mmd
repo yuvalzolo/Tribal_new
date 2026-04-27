@@ -1,0 +1,60 @@
+sequenceDiagram
+    actor User as Sales Rep
+    participant LWC as Dashboard LWC
+    participant Apex as Apex Controller
+    participant DB as Salesforce DB
+    participant DetailPage as Record Detail Page
+
+    User->>LWC: Access Dashboard
+    LWC->>Apex: Request Account & Opportunity Data
+    Apex->>DB: Query Accounts with Custom Fields
+    DB-->>Apex: Return Account Records
+    Apex->>DB: Query Opportunities with Custom Fields
+    DB-->>Apex: Return Opportunity Records
+    Apex-->>LWC: Return Filtered Data
+    LWC->>LWC: Render Dashboard with Metrics
+    LWC->>LWC: Display Summary Statistics
+    
+    User->>LWC: Apply Filters (Tier, Industry, Stage)
+    LWC->>Apex: Request Filtered Data
+    Apex->>DB: Query with Filter Criteria
+    DB-->>Apex: Return Filtered Records
+    Apex-->>LWC: Return Results
+    LWC->>LWC: Update Dashboard Display
+    
+    User->>LWC: Search for Record
+    LWC->>Apex: Execute Search Query
+    Apex->>DB: Search Accounts/Opportunities
+    DB-->>Apex: Return Search Results
+    Apex-->>LWC: Return Matching Records
+    LWC->>LWC: Display Search Results
+    
+    User->>LWC: Click on Account/Opportunity
+    LWC->>DetailPage: Navigate to Record Detail
+    DetailPage->>DB: Load Record Data
+    DB-->>DetailPage: Return Full Record
+    DetailPage->>User: Display Record Details
+    
+    User->>LWC: Access Contact Management
+    LWC->>Apex: Request Contact Data
+    Apex->>DB: Query Contacts with Relationships
+    DB-->>Apex: Return Contact Records
+    Apex-->>LWC: Return Contact Data
+    LWC->>LWC: Display Contacts Grouped by Account
+    
+    User->>LWC: Filter Contacts (Role, Engagement)
+    LWC->>Apex: Request Filtered Contacts
+    Apex->>DB: Query with Contact Filters
+    DB-->>Apex: Return Filtered Contacts
+    Apex-->>LWC: Return Results
+    LWC->>LWC: Update Contact Display
+    
+    User->>LWC: Click LinkedIn Profile Link
+    LWC->>User: Open External LinkedIn Profile
+    
+    User->>LWC: Execute Quick Action (Log Call/Email)
+    LWC->>Apex: Create Activity Record
+    Apex->>DB: Insert Call/Email Log
+    DB-->>Apex: Confirm Creation
+    Apex-->>LWC: Return Success
+    LWC->>User: Display Confirmation

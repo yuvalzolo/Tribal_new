@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+            <fullName>ECP_Deal_Priority__c</fullName>
+            <label>Deal Priority</label>
+            <description>Priority level assigned to this opportunity based on strategic importance and urgency</description>
+            <type>Picklist</type>
+            <required>false</required>
+            <trackHistory>false</trackHistory>
+            
+            <!-- Field Level Security - Visible and Editable for all profiles by default -->
+            <securityClassification>Public</securityClassification>
+            <complianceGroup>None</complianceGroup>
+            
+            <valueSet>
+                <restricted>true</restricted>
+                <valueSetDefinition>
+                    <sorted>false</sorted>
+                    
+                    <value>
+                        <fullName>Critical</fullName>
+                        <default>false</default>
+                        <label>Critical</label>
+                    </value>
+                    
+                    <value>
+                        <fullName>High</fullName>
+                        <default>false</default>
+                        <label>High</label>
+                    </value>
+                    
+                    <value>
+                        <fullName>Medium</fullName>
+                        <default>false</default>
+                        <label>Medium</label>
+                    </value>
+                    
+                    <value>
+                        <fullName>Low</fullName>
+                        <default>false</default>
+                        <label>Low</label>
+                    </value>
+                    
+                </valueSetDefinition>
+            </valueSet>
+        </CustomField>
