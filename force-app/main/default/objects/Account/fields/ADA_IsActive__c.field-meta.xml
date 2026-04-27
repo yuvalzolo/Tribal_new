@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+            <fullName>ADA_IsActive__c</fullName>
+            <label>Is Active</label>
+            <description>Indicates whether this account is currently active and engaged with the organization</description>
+            <type>Checkbox</type>
+            <defaultValue>false</defaultValue>
+            <trackHistory>false</trackHistory>
+            
+            <!-- Field Level Security - Visible and Editable for all profiles by default -->
+            <securityClassification>Public</securityClassification>
+            <complianceGroup>None</complianceGroup>
+        </CustomField>

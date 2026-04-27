@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+            <fullName>ADA_FullAccess</fullName>
+            <label>ADA Account Dashboard Full Access</label>
+            <description>Provides full access to all Account Dashboard App components including custom fields, Apex classes, custom tab, and custom application</description><!-- Field Permissions - Make custom fields visible and editable based on isEditable (required fields are excluded) -->
+            
+            <fieldPermissions>
+                
+                <editable>true</editable>
+                
+                <field>Account.ADA_Account_Health_Score__c</field>
+                <readable>true</readable>
+            </fieldPermissions>
+            
+            <fieldPermissions>
+                
+                <editable>true</editable>
+                
+                <field>Account.ADA_Total_Revenue__c</field>
+                <readable>true</readable>
+            </fieldPermissions>
+            
+            <fieldPermissions>
+                
+                <editable>true</editable>
+                
+                <field>Account.ADA_Last_Activity_Date__c</field>
+                <readable>true</readable>
+            </fieldPermissions>
+            
+            <fieldPermissions>
+                
+                <editable>true</editable>
+                
+                <field>Account.ADA_Account_Tier__c</field>
+                <readable>true</readable>
+            </fieldPermissions>
+            
+            <fieldPermissions>
+                
+                <editable>true</editable>
+                
+                <field>Account.ADA_IsActive__c</field>
+                <readable>true</readable>
+            </fieldPermissions>
+            
+            
+            <!-- Tab Settings - Make custom tabs visible -->
+            
+            <tabSettings>
+                <tab>ADA_AccountDashboard</tab>
+                <visibility>Visible</visibility>
+            </tabSettings>
+            
+            
+            <!-- Application Visibility - Make custom applications available -->
+            
+            <applicationVisibilities>
+                <application>ADA_AccountDashboardApp</application>
+                <visible>true</visible>
+            </applicationVisibilities>
+            
+            
+            <!-- Apex Class Access - Grant access to Apex classes -->
+            
+            <classAccesses>
+                <apexClass>ADA_AccountDashboardCtrl</apexClass>
+                <enabled>true</enabled>
+            </classAccesses>
+            
+            
+            <!-- Run Flow Permission - Required when project has screen flows -->
+            
+            
+            <hasActivationRequired>false</hasActivationRequired>
+        </PermissionSet>

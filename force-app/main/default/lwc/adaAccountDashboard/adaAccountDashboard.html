@@ -1,0 +1,218 @@
+<template>
+    <lightning-card title="Account Dashboard" icon-name="standard:account">
+        <div class="slds-var-p-around_medium">
+            <!-- Loading Spinner -->
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading dashboard data" size="medium"></lightning-spinner>
+            </template>
+
+            <!-- Error Message -->
+            <template if:true={errorMessage}>
+                <div class="slds-box slds-theme_error slds-var-m-bottom_medium">
+                    <p>{errorMessage}</p>
+                </div>
+            </template>
+
+            <!-- Key Metrics Section -->
+            <template if:false={isLoading}>
+                <div class="metrics-container slds-var-m-bottom_large">
+                    <h2 class="slds-text-heading_small slds-var-m-bottom_small">Key Metrics</h2>
+                    <div class="slds-grid slds-gutters slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-4">
+                            <lightning-card class="metric-card">
+                                <div class="slds-var-p-around_small slds-text-align_center">
+                                    <p class="slds-text-heading_large slds-text-color_success">{totalAccounts}</p>
+                                    <p class="slds-text-body_regular">Total Accounts</p>
+                                </div>
+                            </lightning-card>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-4">
+                            <lightning-card class="metric-card">
+                                <div class="slds-var-p-around_small slds-text-align_center">
+                                    <p class="slds-text-heading_large slds-text-color_success">{activeAccounts}</p>
+                                    <p class="slds-text-body_regular">Active Accounts</p>
+                                </div>
+                            </lightning-card>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-4">
+                            <lightning-card class="metric-card">
+                                <div class="slds-var-p-around_small slds-text-align_center">
+                                    <p class="slds-text-heading_large slds-text-color_success">{formattedAverageRevenue}</p>
+                                    <p class="slds-text-body_regular">Avg Revenue</p>
+                                </div>
+                            </lightning-card>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-4">
+                            <lightning-card class="metric-card">
+                                <div class="slds-var-p-around_small slds-text-align_center">
+                                    <p class="slds-text-heading_large slds-text-color_success">{formattedAverageHealthScore}</p>
+                                    <p class="slds-text-body_regular">Avg Health Score</p>
+                                </div>
+                            </lightning-card>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="charts-container slds-var-m-bottom_large">
+                    <h2 class="slds-text-heading_small slds-var-m-bottom_small">Distribution Charts</h2>
+                    <div class="slds-grid slds-gutters slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-3">
+                            <lightning-card title="By Tier">
+                                <div class="slds-var-p-around_small chart-content">
+                                    <template if:true={tierDistribution}>
+                                        <template for:each={tierDistribution} for:item="item">
+                                            <div key={item.label} class="chart-bar-container">
+                                                <div class="chart-label">{item.label}</div>
+                                                <div class="chart-bar-wrapper">
+                                                    <div class="chart-bar" data-count={item.count} style={item.barWidth}></div>
+                                                    <span class="chart-value">{item.count}</span>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </template>
+                                    <template if:false={tierDistribution}>
+                                        <p class="slds-text-align_center">No data available</p>
+                                    </template>
+                                </div>
+                            </lightning-card>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-3">
+                            <lightning-card title="By Industry">
+                                <div class="slds-var-p-around_small chart-content">
+                                    <template if:true={industryDistribution}>
+                                        <template for:each={industryDistribution} for:item="item">
+                                            <div key={item.label} class="chart-bar-container">
+                                                <div class="chart-label">{item.label}</div>
+                                                <div class="chart-bar-wrapper">
+                                                    <div class="chart-bar" data-count={item.count} style={item.barWidth}></div>
+                                                    <span class="chart-value">{item.count}</span>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </template>
+                                    <template if:false={industryDistribution}>
+                                        <p class="slds-text-align_center">No data available</p>
+                                    </template>
+                                </div>
+                            </lightning-card>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-3">
+                            <lightning-card title="By Type">
+                                <div class="slds-var-p-around_small chart-content">
+                                    <template if:true={typeDistribution}>
+                                        <template for:each={typeDistribution} for:item="item">
+                                            <div key={item.label} class="chart-bar-container">
+                                                <div class="chart-label">{item.label}</div>
+                                                <div class="chart-bar-wrapper">
+                                                    <div class="chart-bar" data-count={item.count} style={item.barWidth}></div>
+                                                    <span class="chart-value">{item.count}</span>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </template>
+                                    <template if:false={typeDistribution}>
+                                        <p class="slds-text-align_center">No data available</p>
+                                    </template>
+                                </div>
+                            </lightning-card>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accounts List Section -->
+                <div class="accounts-list-container">
+                    <h2 class="slds-text-heading_small slds-var-m-bottom_small">Accounts</h2>
+                    <lightning-card>
+                        <div class="slds-var-p-around_small">
+                            <!-- Search Bar -->
+                            <div class="slds-var-m-bottom_small">
+                                <lightning-input
+                                    type="search"
+                                    label="Search Accounts"
+                                    placeholder="Search by account name..."
+                                    value={searchTerm}
+                                    onchange={handleSearchChange}>
+                                </lightning-input>
+                            </div>
+
+                            <!-- Accounts Table -->
+                            <template if:true={hasAccounts}>
+                                <div class="table-container">
+                                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                        <thead>
+                                            <tr class="slds-line-height_reset">
+                                                <th scope="col">
+                                                    <div class="slds-truncate" title="Account Name">Account Name</div>
+                                                </th>
+                                                <th scope="col">
+                                                    <div class="slds-truncate" title="Tier">Tier</div>
+                                                </th>
+                                                <th scope="col">
+                                                    <div class="slds-truncate" title="Health Score">Health Score</div>
+                                                </th>
+                                                <th scope="col">
+                                                    <div class="slds-truncate" title="Total Revenue">Total Revenue</div>
+                                                </th>
+                                                <th scope="col">
+                                                    <div class="slds-truncate" title="Industry">Industry</div>
+                                                </th>
+                                                <th scope="col">
+                                                    <div class="slds-truncate" title="Last Activity">Last Activity</div>
+                                                </th>
+                                                <th scope="col">
+                                                    <div class="slds-truncate" title="Status">Status</div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <template for:each={filteredAccounts} for:item="account">
+                                                <tr key={account.id} class="slds-hint-parent">
+                                                    <td>
+                                                        <div class="slds-truncate">
+                                                            <a href={account.recordUrl} target="_blank">{account.name}</a>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="slds-truncate">{account.tier}</div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="slds-truncate">{account.formattedHealthScore}</div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="slds-truncate">{account.formattedRevenue}</div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="slds-truncate">{account.industry}</div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="slds-truncate">{account.formattedActivityDate}</div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="slds-truncate">
+                                                            <lightning-badge
+                                                                label={account.statusLabel}
+                                                                class={account.statusClass}>
+                                                            </lightning-badge>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </template>
+
+                            <!-- No Accounts Message -->
+                            <template if:false={hasAccounts}>
+                                <div class="slds-text-align_center slds-var-p-around_medium">
+                                    <p class="slds-text-body_regular">No accounts found. Try adjusting your search criteria.</p>
+                                </div>
+                            </template>
+                        </div>
+                    </lightning-card>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

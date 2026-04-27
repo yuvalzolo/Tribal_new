@@ -1,0 +1,119 @@
+/* Dashboard Container */
+.metrics-container,
+.charts-container,
+.accounts-list-container {
+    width: 100%;
+}
+
+/* Metric Cards */
+.metric-card {
+    height: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Chart Styles */
+.chart-content {
+    min-height: 200px;
+}
+
+.chart-bar-container {
+    margin-bottom: 0.75rem;
+}
+
+.chart-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    color: #3e3e3c;
+}
+
+.chart-bar-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.chart-bar {
+    height: 24px;
+    background: linear-gradient(90deg, #1589ee 0%, #06a59a 100%);
+    border-radius: 4px;
+    min-width: 4px;
+    transition: width 0.3s ease-in-out;
+}
+
+.chart-value {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #3e3e3c;
+    min-width: 30px;
+}
+
+/* Table Styles */
+.table-container {
+    overflow-x: auto;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.table-container table {
+    min-width: 800px;
+}
+
+.table-container th {
+    position: sticky;
+    top: 0;
+    background-color: #f3f3f3;
+    z-index: 10;
+}
+
+.table-container tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.table-container a {
+    color: #0176d3;
+    text-decoration: none;
+}
+
+.table-container a:hover {
+    text-decoration: underline;
+}
+
+/* Status Badge Styles */
+lightning-badge.slds-theme_success {
+    --slds-c-badge-color-background: #2e844a;
+}
+
+lightning-badge.slds-theme_warning {
+    --slds-c-badge-color-background: #fe9339;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .chart-content {
+        min-height: 150px;
+    }
+
+    .table-container {
+        max-height: 400px;
+    }
+}
+
+/* Loading State */
+lightning-spinner {
+    margin: 2rem auto;
+}
+
+/* Error Message */
+.slds-theme_error {
+    background-color: #feded8;
+    border: 1px solid #ea001e;
+    padding: 1rem;
+    border-radius: 4px;
+}

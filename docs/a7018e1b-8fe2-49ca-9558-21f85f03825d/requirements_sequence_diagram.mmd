@@ -1,0 +1,40 @@
+sequenceDiagram
+    actor User
+    participant Dashboard as Account Dashboard<br/>(LWC)
+    participant Controller as AccountDashboardController<br/>(Apex)
+    participant Database as Salesforce<br/>Database
+    
+    User->>Dashboard: Load Dashboard Page
+    Dashboard->>Controller: fetchAccountMetrics()
+    Controller->>Database: Query Account records
+    Database-->>Controller: Account data
+    Controller->>Controller: Calculate metrics<br/>(total, active, avg revenue,<br/>avg health score)
+    Controller-->>Dashboard: Metrics data
+    Dashboard->>Dashboard: Display metric cards
+    
+    Controller->>Database: Query accounts by tier
+    Database-->>Controller: Tier distribution data
+    Controller-->>Dashboard: Tier chart data
+    Dashboard->>Dashboard: Render tier chart
+    
+    Controller->>Database: Query accounts by industry
+    Database-->>Controller: Industry distribution data
+    Controller-->>Dashboard: Industry chart data
+    Dashboard->>Dashboard: Render industry chart
+    
+    Controller->>Database: Query accounts by type
+    Database-->>Controller: Type distribution data
+    Controller-->>Dashboard: Type chart data
+    Dashboard->>Dashboard: Render type chart
+    
+    Controller->>Database: Query all accounts
+    Database-->>Controller: Account list
+    Controller-->>Dashboard: Account list data
+    Dashboard->>Dashboard: Display account table
+    
+    User->>Dashboard: Search/Filter accounts
+    Dashboard->>Dashboard: Filter list by name
+    Dashboard->>User: Display filtered results
+    
+    User->>Dashboard: Click account link
+    Dashboard->>User: Navigate to Account record

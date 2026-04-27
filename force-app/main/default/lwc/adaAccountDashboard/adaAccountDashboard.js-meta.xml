@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+            <apiVersion>66.0</apiVersion>
+            <description>Interactive Account Dashboard displaying key metrics, charts for tier/industry/type distribution, and a searchable account list table with clickable links.</description>
+            <isExposed>True</isExposed>
+            <masterLabel>Account Dashboard</masterLabel>
+            <targets>
+                
+                <target>lightning__AppPage</target>
+                
+                <target>lightning__HomePage</target>
+                
+                <target>lightning__Tab</target>
+                
+            </targets>
+        </LightningComponentBundle>

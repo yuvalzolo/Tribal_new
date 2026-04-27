@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
+            <label>Account Dashboard</label>
+            <description>Navigate to the Account Dashboard for comprehensive account statistics and insights</description>
+            
+            <flexiPage>ADA_AccountDashboardPage</flexiPage>
+            
+            <motif>Custom48: Trophy</motif>
+        </CustomTab>
